@@ -5,6 +5,7 @@ using UnityEngine;
 public class BodyController : MonoBehaviour
 {
 	public GameObject followTarget;
+	public BodyController nextPart;
 
 	public float speed;
 	public float distance;
