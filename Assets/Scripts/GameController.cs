@@ -7,31 +7,38 @@ public class GameController : MonoBehaviour
 	public GameObject applePrefab;
 	public GameObject levelBoundry;
 
-	private Vector2 levelSize;
+	private Vector3 levelSize3D;
+	public Vector2 levelSize2D;
 	private float spawnPosLimit = 0.8f;
+	public GameObject apple;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-		levelSize = new Vector2( levelBoundry.transform.localScale.x, levelBoundry.transform.localScale.z );
-    }
+	// Start is called before the first frame update
+	void Start()
+	{
+		levelSize3D = levelBoundry.GetComponent<MeshCollider>().bounds.size;
+		levelSize2D = new Vector2( levelSize3D.x, levelSize3D.z );
+		apple = SpawnApple();
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
+	// Update is called once per frame
+	void Update()
+	{
 		// Debug
 		if( Input.GetKeyDown( KeyCode.R ) )
 			SpawnApple();
+
+		if( apple == null )
+			apple = SpawnApple();
 	}
 
-	void SpawnApple()
+	GameObject SpawnApple()
 	{
 		System.Random rand = new System.Random();
 		Vector3 spawnPos = new Vector3(
-			(float)rand.NextDouble() * levelSize.x * 2 - levelSize.x * spawnPosLimit,
+			((float)rand.NextDouble() - 0.5f) * levelSize2D.x * spawnPosLimit,
 			applePrefab.transform.position.y,
-			(float)rand.NextDouble() * levelSize.y * 2 - levelSize.y * spawnPosLimit
+			((float)rand.NextDouble() - 0.5f) * levelSize2D.y * spawnPosLimit
 		);
-		Instantiate( applePrefab, spawnPos, applePrefab.transform.rotation );
+		return Instantiate( applePrefab, spawnPos, applePrefab.transform.rotation );
 	}
 }

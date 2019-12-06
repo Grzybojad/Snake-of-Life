@@ -8,12 +8,13 @@ public class PlayerController : MonoBehaviour
 	public float turningSpeed;
 
 	public BodyController bodyPrefab;
-
 	private BodyController firstPart;
+
+	private Rigidbody rb;
 
     void Start()
     {
-
+		rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -25,12 +26,26 @@ public class PlayerController : MonoBehaviour
 			AddPart();
 	}
 
+	private void OnTriggerEnter( Collider other )
+	{
+		if( other.tag == "Collectable" )
+		{
+			Destroy( other.gameObject );
+			AddPart();
+		}
+	}
+
 
 	void Movement()
 	{
-		float horizontalInput = Input.GetAxis( "Horizontal" );
-		transform.Translate( Vector3.forward * speed * Time.deltaTime );
-		transform.Rotate( Vector3.up, horizontalInput * turningSpeed * Time.deltaTime );
+		float horizontalInput = 0;
+		if( Input.GetKey( KeyCode.LeftArrow ) )	horizontalInput = -1;
+		if( Input.GetKey( KeyCode.RightArrow ) ) horizontalInput = 1;
+
+		Vector3 nextPos = transform.position + transform.forward * speed * Time.deltaTime;
+		Quaternion nextRot = Quaternion.Euler( transform.eulerAngles + transform.up * horizontalInput * turningSpeed * Time.deltaTime );
+		rb.MovePosition( nextPos );
+		rb.MoveRotation( nextRot );
 	}
 
 	void AddPart()
