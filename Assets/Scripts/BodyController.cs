@@ -7,7 +7,7 @@ public class BodyController : MonoBehaviour
 	public GameObject followTarget;
 	public BodyController nextPart;
 
-	public float speed;
+	//public float speed;
 	public float distance;
 
 	private Vector3 targetPos;
@@ -26,6 +26,7 @@ public class BodyController : MonoBehaviour
 		transform.LookAt( targetPos );
 
 		if( (transform.position - targetPos).magnitude > distance )
-			transform.Translate( Vector3.forward * speed * Time.deltaTime );
+			transform.Translate( Vector3.forward * ((transform.position - targetPos).magnitude - distance) );
+		//transform.Translate( Vector3.forward * speed * Time.deltaTime );
 	}
 }

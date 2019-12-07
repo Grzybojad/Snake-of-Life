@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 	public float speed;
 	public float turningSpeed;
+	public uint startingLength;
 
 	public BodyController bodyPrefab;
 	private BodyController firstPart;
@@ -15,15 +16,19 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
 		rb = GetComponent<Rigidbody>();
-    }
+
+		for( int i = 0; i < startingLength; i++ )
+			AddPart();
+	}
 
     void Update()
     {
-		Movement();
 
-		// Debug
-		if( Input.GetKeyDown( KeyCode.Space ) )
-			AddPart();
+	}
+
+	private void FixedUpdate()
+	{
+		Movement();
 	}
 
 	private void OnTriggerEnter( Collider other )
@@ -42,8 +47,8 @@ public class PlayerController : MonoBehaviour
 		if( Input.GetKey( KeyCode.LeftArrow ) )	horizontalInput = -1;
 		if( Input.GetKey( KeyCode.RightArrow ) ) horizontalInput = 1;
 
-		Vector3 nextPos = transform.position + transform.forward * speed * Time.deltaTime;
-		Quaternion nextRot = Quaternion.Euler( transform.eulerAngles + transform.up * horizontalInput * turningSpeed * Time.deltaTime );
+		Vector3 nextPos = transform.position + transform.forward * speed * Time.fixedDeltaTime;
+		Quaternion nextRot = Quaternion.Euler( transform.eulerAngles + transform.up * horizontalInput * turningSpeed * Time.fixedDeltaTime );
 		rb.MovePosition( nextPos );
 		rb.MoveRotation( nextRot );
 	}
