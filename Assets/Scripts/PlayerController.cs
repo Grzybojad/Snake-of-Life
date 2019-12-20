@@ -27,11 +27,6 @@ public class PlayerController : MonoBehaviour
 			AddPart();
 	}
 
-    void Update()
-    {
-
-	}
-
 	private void FixedUpdate()
 	{
 		Movement();
