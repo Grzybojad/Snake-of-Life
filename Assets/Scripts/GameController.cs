@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
@@ -27,7 +28,7 @@ public class GameController : MonoBehaviour
 	GameState _gameState;
 
 	// Start is called before the first frame update
-	void Start()
+	void Awake()
 	{
 		levelSize3D = levelBoundry.GetComponent<MeshCollider>().bounds.size;
 		levelSize2D = new Vector2( levelSize3D.x, levelSize3D.z );
@@ -40,6 +41,12 @@ public class GameController : MonoBehaviour
 		FindObjectOfType<PlayerController>().deathEvent += OnPlayerDeath;
 
 		_gameState = GameState.playing;
+	}
+
+	private void Start()
+	{
+		if( highscore > 0 )
+			newHighscoreEvent?.Invoke( highscore );
 	}
 
 	// Update is called once per frame
@@ -58,9 +65,6 @@ public class GameController : MonoBehaviour
 				break;
 
 		}
-		
-		
-		
 	}
 
 	void PlayingUpdate()
@@ -68,7 +72,7 @@ public class GameController : MonoBehaviour
 		if( apple == null )
 		{
 			score++;
-			newScoreEvent( score );
+			newScoreEvent?.Invoke( score );
 			apple = SpawnApple();
 		}
 	}
@@ -79,6 +83,8 @@ public class GameController : MonoBehaviour
 		if( Input.GetKeyDown( KeyCode.R ) )
 		{
 			Time.timeScale = 1;
+			PlayerPrefs.Save();
+
 			SceneManager.LoadScene( 0 );
 		}
 	}
@@ -101,8 +107,8 @@ public class GameController : MonoBehaviour
 		if( score > highscore )
 		{
 			highscore = score;
+			newHighscoreEvent?.Invoke( highscore );
 			PlayerPrefs.SetInt( "Highscore", highscore );
-			newHighscoreEvent( highscore );
 		}
 
 		_gameState = GameState.gameOver;

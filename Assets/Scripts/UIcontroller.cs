@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class UIcontroller : MonoBehaviour
@@ -12,10 +10,9 @@ public class UIcontroller : MonoBehaviour
 
     private GameController gameController;
     private int currentScore;
-    private int currentHighscore;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // Get a reference to the Game Controller object
         gameController = FindObjectOfType<GameController>();
@@ -34,13 +31,12 @@ public class UIcontroller : MonoBehaviour
 
     private void OnScoreChange( int score )
     {
-        currentScore = score;
-        scoreText.text = "Score: " + score;
+		currentScore = score;
+		scoreText.text = "Score: " + score;
     }
 
     private void OnHighscoreChange( int highscore )
     {
-        currentHighscore = highscore;
         highscoreText.text = "Highscore: " + highscore;
     }
 }

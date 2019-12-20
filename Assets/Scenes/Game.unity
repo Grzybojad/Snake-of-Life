@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 6c12a8f94a5f1544793c37f425c8602e,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -2365,8 +2366,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 1, g: 0.94558215, b: 0.7971698, a: 1}
+  m_Intensity: 0.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2422,13 +2423,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.44321528, y: -0.0569887, z: 0.38909855, w: 0.80555254}
+  m_LocalRotation: {x: 0.11443702, y: -0.53593695, z: 0.57857037, w: 0.6040961}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 49.325, y: 22.85, z: 62.165005}
+  m_LocalEulerAnglesHint: {x: 49.325, y: -52.214, z: 62.166004}
 --- !u!1001 &706465668
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3580,8 +3581,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -220, y: -38.3}
-  m_SizeDelta: {x: 399.7, y: 55.4}
+  m_AnchoredPosition: {x: -196.2, y: -47.6}
+  m_SizeDelta: {x: 340.3, y: 68.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1268110954
 MonoBehaviour:
@@ -5313,10 +5314,10 @@ RectTransform:
   m_Father: {fileID: 1043710956}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 65.6}
-  m_SizeDelta: {x: 844.4, y: 168.9}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 88}
+  m_SizeDelta: {x: 0, y: 168.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1798161990
 MonoBehaviour:
@@ -6473,6 +6474,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1821451359177382891, guid: c8d1f5e882e4ca04faf7490ea072d2d2,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 1cf3e98d0c2f37b498a437b4241a4083,
+        type: 2}
     - target: {fileID: 1947403135980103533, guid: c8d1f5e882e4ca04faf7490ea072d2d2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6527,6 +6534,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947403135980103534, guid: c8d1f5e882e4ca04faf7490ea072d2d2,
+        type: 3}
+      propertyPath: speed
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 1947403135980103535, guid: c8d1f5e882e4ca04faf7490ea072d2d2,
         type: 3}
