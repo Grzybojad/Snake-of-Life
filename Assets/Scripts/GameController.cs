@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
 	public GameObject applePrefab;
 	public GameObject levelBoundry;
+	public TextMeshProUGUI scoreText;
 
 	private Vector3 levelSize3D;
-	public Vector2 levelSize2D;
+	private Vector2 levelSize2D;
 	private float spawnPosLimit = 0.8f;
-	public GameObject apple;
+	private GameObject apple;
+
+	private int score;
 
 	// Start is called before the first frame update
 	void Start()
@@ -18,6 +22,7 @@ public class GameController : MonoBehaviour
 		levelSize3D = levelBoundry.GetComponent<MeshCollider>().bounds.size;
 		levelSize2D = new Vector2( levelSize3D.x, levelSize3D.z );
 		apple = SpawnApple();
+		score = 0;
 	}
 
 	// Update is called once per frame
@@ -28,7 +33,12 @@ public class GameController : MonoBehaviour
 			SpawnApple();
 
 		if( apple == null )
+		{
+			score++;
+			scoreText.text = "Score: " + score;
 			apple = SpawnApple();
+		}
+			
 	}
 
 	GameObject SpawnApple()

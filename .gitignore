@@ -5,6 +5,9 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 
+# Ignore TextMesh Pro files
+Assets/TextMesh\ Pro
+
 # Visual Studio cache directory
 .vs/
 

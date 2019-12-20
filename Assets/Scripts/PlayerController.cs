@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -44,13 +45,14 @@ public class PlayerController : MonoBehaviour
 	void Movement()
 	{
 		float horizontalInput = 0;
-		if( Input.GetKey( KeyCode.LeftArrow ) )	horizontalInput = -1;
+		if( Input.GetKey( KeyCode.LeftArrow ) ) horizontalInput = -1;
 		if( Input.GetKey( KeyCode.RightArrow ) ) horizontalInput = 1;
 
-		Vector3 nextPos = transform.position + transform.forward * speed * Time.fixedDeltaTime;
 		Quaternion nextRot = Quaternion.Euler( transform.eulerAngles + transform.up * horizontalInput * turningSpeed * Time.fixedDeltaTime );
-		rb.MovePosition( nextPos );
 		rb.MoveRotation( nextRot );
+
+		rb.velocity = Vector3.zero;
+		rb.AddForce( transform.forward * speed * Time.fixedDeltaTime, ForceMode.Impulse );
 	}
 
 	void AddPart()
