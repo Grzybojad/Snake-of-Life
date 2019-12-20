@@ -23,6 +23,8 @@ public class GameController : MonoBehaviour
 		levelSize2D = new Vector2( levelSize3D.x, levelSize3D.z );
 		apple = SpawnApple();
 		score = 0;
+
+		FindObjectOfType<PlayerController>().deathEvent += OnPlayerDeath;
 	}
 
 	// Update is called once per frame
@@ -50,5 +52,10 @@ public class GameController : MonoBehaviour
 			((float)rand.NextDouble() - 0.5f) * levelSize2D.y * spawnPosLimit
 		);
 		return Instantiate( applePrefab, spawnPos, applePrefab.transform.rotation );
+	}
+
+	private void OnPlayerDeath()
+	{
+		Time.timeScale = 0;
 	}
 }

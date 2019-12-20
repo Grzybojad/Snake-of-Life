@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,9 +12,16 @@ public class PlayerController : MonoBehaviour
 
 	private Rigidbody rb;
 
+	private AudioSource audioSource;
+	public AudioClip bite_sfx;
+	public AudioClip death_sfx;
+
+	public event Action deathEvent;
+
     void Start()
     {
 		rb = GetComponent<Rigidbody>();
+		audioSource = GetComponent<AudioSource>();
 
 		for( int i = 0; i < startingLength; i++ )
 			AddPart();
@@ -37,7 +42,32 @@ public class PlayerController : MonoBehaviour
 		if( other.tag == "Collectable" )
 		{
 			Destroy( other.gameObject );
+			audioSource.PlayOneShot( bite_sfx );
 			AddPart();
+		}
+
+		if( other.tag == "Player" )
+		{
+			HandlePlayerCollision( other );
+		}
+	}
+
+	private void HandlePlayerCollision( Collider other )
+	{
+		int nrOfPartsToIgnore = 2;
+		BodyController part = firstPart;
+		for( int i = 0; i < nrOfPartsToIgnore; i++ )
+		{
+			if( other.gameObject == part ) return;
+			if( part.nextPart != null )
+				part = part.nextPart;
+			else
+				return;
+		}
+		if( deathEvent != null )
+		{
+			audioSource.PlayOneShot( death_sfx );
+			deathEvent();
 		}
 	}
 
@@ -52,7 +82,12 @@ public class PlayerController : MonoBehaviour
 		rb.MoveRotation( nextRot );
 
 		rb.velocity = Vector3.zero;
-		rb.AddForce( transform.forward * speed * Time.fixedDeltaTime, ForceMode.Impulse );
+
+		float speedMultiplier = 1.0f;
+		if( Input.GetKey( KeyCode.Space ) )
+			speedMultiplier = 1.6f;
+
+		rb.AddForce( transform.forward * speed * speedMultiplier * Time.fixedDeltaTime, ForceMode.Impulse );
 	}
 
 	void AddPart()
