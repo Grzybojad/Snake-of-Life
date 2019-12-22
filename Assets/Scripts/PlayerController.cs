@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -7,10 +8,13 @@ public class PlayerController : MonoBehaviour
 	public float turningSpeed;
 	public uint startingLength;
 
-	public BodyController bodyPrefab;
-	private BodyController firstPart;
+	public TailPart bodyPrefab;
+	LinkedList<Vector3> path;
+	List<TailPart> tail;
 
 	private Rigidbody rb;
+
+	private Vector3 frameStartPosition;
 
 	private AudioSource audioSource;
 	public AudioClip bite_sfx;
@@ -23,13 +27,25 @@ public class PlayerController : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 		audioSource = GetComponent<AudioSource>();
 
+		path = new LinkedList<Vector3>();
+		InitPath();
+		tail = new List<TailPart>();
+
 		for( int i = 0; i < startingLength; i++ )
 			AddPart();
 	}
 
 	private void FixedUpdate()
 	{
+		frameStartPosition = transform.position;
+
 		Movement();
+
+		path.AddFirst( transform.position );
+		if( tail.Count > 1 ) 
+		{
+			MoveParts();
+		}
 	}
 
 	private void OnTriggerEnter( Collider other )
@@ -49,20 +65,16 @@ public class PlayerController : MonoBehaviour
 
 	private void HandlePlayerCollision( Collider other )
 	{
-		int nrOfPartsToIgnore = 2;
-		BodyController part = firstPart;
-		for( int i = 0; i < nrOfPartsToIgnore; i++ )
+		int nrOfPartsToIgnore = 5;
+		for( int i = 0; i < nrOfPartsToIgnore && i < tail.Count; i++ )
 		{
-			if( other.gameObject == part ) return;
-			if( part.nextPart != null )
-				part = part.nextPart;
-			else
-				return;
+			if( other.transform.parent == tail[ i ].transform ) return;
 		}
 		if( deathEvent != null )
 		{
 			audioSource.PlayOneShot( death_sfx );
 			deathEvent();
+			Debug.Log( "Died to: " + other.name );
 		}
 	}
 
@@ -85,22 +97,61 @@ public class PlayerController : MonoBehaviour
 		rb.AddForce( transform.forward * speed * speedMultiplier * Time.fixedDeltaTime, ForceMode.Impulse );
 	}
 
+	bool HasMoved()
+	{
+		return frameStartPosition != transform.position;
+	}
+
+	void MoveParts()
+	{
+		var lastNode = path.First;
+		foreach( TailPart part in tail )
+		{
+			lastNode = part.FollowTrail( path );
+		}
+
+		// Nr of nodes to leave extra
+		int nodeMargin = 20;
+		for( int i = 0; i < nodeMargin; i++ )
+			if( lastNode.Next != null)
+				lastNode = lastNode.Next;
+
+		// Cut off tail if it's too long
+		while( lastNode != path.Last )
+		{
+			path.RemoveLast();
+		}
+	}
+
+	void InitPath()
+	{
+		// TODO: fix this
+		// Add a few nodes so that the snake starts with some path
+		for( int i = 0; i < 10; i++ )
+		{
+			path.AddFirst( transform.position + Vector3.back * 0.1f );
+		}
+	}
+
 	void AddPart()
 	{
-		if( firstPart == null )
+		TailPart newPart;
+		if( tail.Count == 0 )
 		{
-			firstPart = Instantiate( bodyPrefab, transform.position, transform.rotation );
-			firstPart.followTarget = this.gameObject;
+			newPart = Instantiate( bodyPrefab, transform.position, transform.rotation );
 		}
 		else
 		{
-			BodyController part = firstPart;
-			while( part.nextPart != null )
-				part = part.nextPart;
-
-			part.nextPart = Instantiate( bodyPrefab, part.transform.position, part.transform.rotation );
-			part.nextPart.followTarget = part.gameObject;
+			Vector3 newPartPos = tail[ tail.Count - 1 ].transform.position;
+			Quaternion newPartRot = tail[ tail.Count - 1 ].transform.rotation;
+			newPart = Instantiate( bodyPrefab, newPartPos, newPartRot );
 		}
-			
+		if( newPart != null ) tail.Add( newPart );
+		else Debug.Log( "Failed to instantiate a new part!" );
+
+		if( tail.Count > 1 )
+			tail[ tail.Count - 1 ].parent = tail[ tail.Count - 2 ].transform;
+		else
+			tail[ tail.Count - 1 ].parent = this.transform;
 	}
 }

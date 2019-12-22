@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BodyController : MonoBehaviour
+public class BodyControllerOld : MonoBehaviour
 {
 	public GameObject followTarget;
-	public BodyController nextPart;
+	public BodyControllerOld nextPart;
 
 	//public float speed;
 	public float distance;

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1804266987971016231}
-  - component: {fileID: 7838128194882679401}
+  - component: {fileID: 1804266987971016232}
   m_Layer: 0
-  m_Name: Body
+  m_Name: Body old
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7838128194882679401
+--- !u!114 &1804266987971016232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,11 +41,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1804266987971016233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bef4c0049ad246449b5edd459a09c4a, type: 3}
+  m_Script: {fileID: 11500000, guid: 513f3ee5f57d9eb45a0346667b518dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  margin: 0.6
-  parent: {fileID: 0}
+  followTarget: {fileID: 0}
+  nextPart: {fileID: 0}
+  distance: 1
 --- !u!1 &1804266989077463008
 GameObject:
   m_ObjectHideFlags: 0
