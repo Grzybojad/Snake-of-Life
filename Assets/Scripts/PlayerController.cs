@@ -35,17 +35,23 @@ public class PlayerController : MonoBehaviour
 			AddPart();
 	}
 
-	private void FixedUpdate()
+	void Update()
+	{
+		// Not sure if this should be here or in FixedUpdate
+		if( tail.Count > 1 )
+		{
+			MoveParts();
+		}
+	}
+
+	void FixedUpdate()
 	{
 		frameStartPosition = transform.position;
 
 		Movement();
 
 		path.AddFirst( transform.position );
-		if( tail.Count > 1 ) 
-		{
-			MoveParts();
-		}
+		
 	}
 
 	private void OnTriggerEnter( Collider other )

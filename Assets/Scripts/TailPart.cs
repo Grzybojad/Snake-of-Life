@@ -7,25 +7,33 @@ public class TailPart : MonoBehaviour
 
     public Transform parent;
 
-    public LinkedListNode<Vector3> FollowTrail( LinkedList<Vector3> path )
-    {
-        float distanceToParent = (transform.position - parent.position).magnitude - margin;
-        var nextNode = path.Last;
-        float distanceToNextNode = (transform.position - nextNode.Value).magnitude;
+	public float distanceToParent;
+	public float distanceToNextNode;
 
-        while( distanceToNextNode < distanceToParent && nextNode != null )
+
+	public LinkedListNode<Vector3> FollowTrail( LinkedList<Vector3> path )
+    {
+		var nextNode = path.Last;
+		Vector3 partPos = nextNode.Value;
+
+		distanceToParent = (partPos - parent.position).magnitude - margin;
+        distanceToNextNode = (partPos - nextNode.Value).magnitude;
+
+		while( distanceToNextNode < distanceToParent && nextNode != null )
         {
-            transform.LookAt( parent );
-            transform.position = nextNode.Value;
-            distanceToParent = (transform.position - parent.position).magnitude - margin;
+			partPos = nextNode.Value;
+            distanceToParent = (partPos - parent.position).magnitude - margin;
 
             nextNode = nextNode.Previous;
             if( nextNode != null )
-                distanceToNextNode = (transform.position - nextNode.Value).magnitude;
+                distanceToNextNode = (partPos - nextNode.Value).magnitude;
         }
-        transform.LookAt( parent );
-        transform.Translate( Vector3.forward * distanceToParent );
+		transform.position = partPos;
+		transform.LookAt( parent );
 
-        return nextNode;
+		// Need to do some "interpolation here to make the movement less jittery I guess?
+		//transform.Translate( Vector3.forward * distanceToParent );
+
+		return nextNode;
     }
 }
