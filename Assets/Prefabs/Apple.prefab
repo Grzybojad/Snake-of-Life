@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7598268031380169689}
   - component: {fileID: 1717821383096021989}
+  - component: {fileID: 4168963656529629977}
+  - component: {fileID: -1800609335905410009}
   m_Layer: 0
   m_Name: Apple
   m_TagString: Collectable
@@ -41,12 +43,41 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2086620294854551687}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_Material: {fileID: 13400000, guid: 38f92d2375cbf1d4a85dbff7e4e7bcb8, type: 2}
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &4168963656529629977
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086620294854551687}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.34027398
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &-1800609335905410009
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086620294854551687}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0.5
+  m_AngularDrag: 0.5
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2994407914689984894
 GameObject:
   m_ObjectHideFlags: 0

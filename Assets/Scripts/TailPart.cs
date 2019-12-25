@@ -3,21 +3,17 @@ using UnityEngine;
 
 public class TailPart : MonoBehaviour
 {
+	public Transform parent;
     public float margin;
-
-    public Transform parent;
-
-	public float distanceToParent;
-	public float distanceToNextNode;
-
+    
 
 	public LinkedListNode<Vector3> FollowTrail( LinkedList<Vector3> path )
     {
 		var nextNode = path.Last;
 		Vector3 partPos = nextNode.Value;
 
-		distanceToParent = (partPos - parent.position).magnitude - margin;
-        distanceToNextNode = (partPos - nextNode.Value).magnitude;
+		float distanceToParent = (partPos - parent.position).magnitude - margin;
+		float distanceToNextNode = (partPos - nextNode.Value).magnitude;
 
 		// Iterate through the path nodes to place the tail part in the correct place
 		while( distanceToNextNode < distanceToParent && nextNode != null )

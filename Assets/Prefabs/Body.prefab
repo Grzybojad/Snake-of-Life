@@ -44,10 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bef4c0049ad246449b5edd459a09c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  margin: 0.6
   parent: {fileID: 0}
-  distanceToParent: 0
-  distanceToNextNode: 0
+  margin: 0.8
 --- !u!1 &1804266989077463008
 GameObject:
   m_ObjectHideFlags: 0
