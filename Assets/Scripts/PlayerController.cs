@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
 	private Rigidbody rb;
 
-	private Vector3 frameStartPosition;
+	private float pathNodeSpacing = 0.1f;
 
 	private AudioSource audioSource;
 	public AudioClip bite_sfx;
@@ -46,16 +46,17 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		frameStartPosition = transform.position;
-
 		Movement();
 
-		path.AddFirst( transform.position );
+		// Only add a new path node if the player has moved away from the last one
+		if( (transform.position - path.First.Value).magnitude > pathNodeSpacing )
+			path.AddFirst( transform.position );
 	}
 
 	// Debug draw path
 	void OnDrawGizmosSelected()
 	{
+		// Drawing the snake path in scene view
 		if( Application.isPlaying )
 		{
 			foreach( Vector3 pos in path )
@@ -68,6 +69,7 @@ public class PlayerController : MonoBehaviour
 
 	private void OnTriggerEnter( Collider other )
 	{
+		// Triggered an apple collider
 		if( other.tag == "Collectable" )
 		{
 			Destroy( other.gameObject );
@@ -75,6 +77,7 @@ public class PlayerController : MonoBehaviour
 			AddPart();
 		}
 
+		// Snake collided with itself
 		if( other.tag == "Player" )
 		{
 			HandlePlayerCollision( other );
@@ -83,22 +86,24 @@ public class PlayerController : MonoBehaviour
 
 	private void HandlePlayerCollision( Collider other )
 	{
-		int nrOfPartsToIgnore = 5;
-		for( int i = 0; i < nrOfPartsToIgnore && i < tail.Count; i++ )
+		// Don't collide with the parts that make up the starting length
+		for( int i = 0; i < startingLength && i < tail.Count; i++ )
 		{
 			if( other.transform.parent == tail[ i ].transform ) return;
 		}
+
+		// Invoke the death event, so that other scripts can react to it
 		if( deathEvent != null )
 		{
 			audioSource.PlayOneShot( death_sfx );
 			deathEvent();
-			Debug.Log( "Died to: " + other.name );
 		}
 	}
 
 
 	void Movement()
 	{
+		// TODO: replace with input manager
 		float horizontalInput = 0;
 		if( Input.GetKey( KeyCode.LeftArrow ) ) horizontalInput = -1;
 		if( Input.GetKey( KeyCode.RightArrow ) ) horizontalInput = 1;
@@ -108,16 +113,12 @@ public class PlayerController : MonoBehaviour
 
 		rb.velocity = Vector3.zero;
 
+		// Speed boost
 		float speedMultiplier = 1.0f;
 		if( Input.GetKey( KeyCode.Space ) )
 			speedMultiplier = 1.6f;
 
 		rb.AddForce( transform.forward * speed * speedMultiplier * Time.fixedDeltaTime, ForceMode.Impulse );
-	}
-
-	bool HasMoved()
-	{
-		return frameStartPosition != transform.position;
 	}
 
 	void MoveParts()
@@ -128,12 +129,6 @@ public class PlayerController : MonoBehaviour
 			lastNode = part.FollowTrail( path );
 		}
 
-		// Nr of nodes to leave extra
-		int nodeMargin = 20;
-		for( int i = 0; i < nodeMargin; i++ )
-			if( lastNode.Next != null)
-				lastNode = lastNode.Next;
-
 		// Cut off tail if it's too long
 		while( lastNode != path.Last )
 		{
@@ -143,10 +138,10 @@ public class PlayerController : MonoBehaviour
 
 	void InitPath()
 	{
-		// Needs more testing
-		for( int i = 0; i < 20 * startingLength; i++ )
+		// Initialize a path that the starting snake pieces can align to
+		for( int i = 0; i < startingLength/pathNodeSpacing; i++ )
 		{
-			path.AddFirst( transform.position + Vector3.back * i * 0.1f );
+			path.AddFirst( transform.position + Vector3.back * i * pathNodeSpacing );
 		}
 	}
 

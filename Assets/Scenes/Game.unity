@@ -4171,7 +4171,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1506296256, guid: c8d1f5e882e4ca04faf7490ea072d2d2, type: 3}
       propertyPath: startingLength
-      value: 2
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1506296256, guid: c8d1f5e882e4ca04faf7490ea072d2d2, type: 3}
+      propertyPath: pathNodeSpacing
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1947403135980103533, guid: c8d1f5e882e4ca04faf7490ea072d2d2,
         type: 3}
