@@ -51,7 +51,19 @@ public class PlayerController : MonoBehaviour
 		Movement();
 
 		path.AddFirst( transform.position );
-		
+	}
+
+	// Debug draw path
+	void OnDrawGizmosSelected()
+	{
+		if( Application.isPlaying )
+		{
+			foreach( Vector3 pos in path )
+			{
+				Gizmos.color = Color.yellow;
+				Gizmos.DrawSphere( pos, 0.1f );
+			}
+		}
 	}
 
 	private void OnTriggerEnter( Collider other )
@@ -131,11 +143,10 @@ public class PlayerController : MonoBehaviour
 
 	void InitPath()
 	{
-		// TODO: fix this
-		// Add a few nodes so that the snake starts with some path
-		for( int i = 0; i < 10; i++ )
+		// Needs more testing
+		for( int i = 0; i < 20 * startingLength; i++ )
 		{
-			path.AddFirst( transform.position + Vector3.back * 0.1f );
+			path.AddFirst( transform.position + Vector3.back * i * 0.1f );
 		}
 	}
 

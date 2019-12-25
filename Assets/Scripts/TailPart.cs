@@ -19,6 +19,7 @@ public class TailPart : MonoBehaviour
 		distanceToParent = (partPos - parent.position).magnitude - margin;
         distanceToNextNode = (partPos - nextNode.Value).magnitude;
 
+		// Iterate through the path nodes to place the tail part in the correct place
 		while( distanceToNextNode < distanceToParent && nextNode != null )
         {
 			partPos = nextNode.Value;
@@ -29,10 +30,9 @@ public class TailPart : MonoBehaviour
                 distanceToNextNode = (partPos - nextNode.Value).magnitude;
         }
 		transform.position = partPos;
-		transform.LookAt( parent );
 
-		// Need to do some "interpolation here to make the movement less jittery I guess?
-		//transform.Translate( Vector3.forward * distanceToParent );
+		transform.LookAt( nextNode.Value );
+		transform.Translate( Vector3.forward * distanceToParent );
 
 		return nextNode;
     }
