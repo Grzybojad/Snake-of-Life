@@ -2240,7 +2240,7 @@ Transform:
   m_GameObject: {fileID: 637329346}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.00005531311, y: 10, z: 0}
-  m_LocalScale: {x: 2.5, y: 1, z: 2.5}
+  m_LocalScale: {x: 1.5, y: 1, z: 1.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -2273,6 +2273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applePrefab: {fileID: 2086620294854551687, guid: 5ba1845bfa4024e4f939b5dc293bb3e2,
     type: 3}
+  throwForce: 1.5
 --- !u!1001 &657180473
 PrefabInstance:
   m_ObjectHideFlags: 0

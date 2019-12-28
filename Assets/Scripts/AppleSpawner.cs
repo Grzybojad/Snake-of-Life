@@ -11,6 +11,8 @@ public class AppleSpawner : MonoBehaviour
 
     public event Action appleCollectEvent;
 
+	public float throwForce;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,9 +44,9 @@ public class AppleSpawner : MonoBehaviour
         );
         GameObject newApple = Instantiate( applePrefab, spawnPos, applePrefab.transform.rotation );
         Vector3 randForce = new Vector3( 
-            (float)rand.NextDouble() - 0.5f, 
-            (float)rand.NextDouble() - 0.5f, 
-            (float)rand.NextDouble() - 0.5f 
+            ((float)rand.NextDouble() - 0.5f ) * throwForce, 
+             (float)rand.NextDouble() - 0.5f,
+			((float)rand.NextDouble() - 0.5f ) * throwForce
         );
 
         float forceMultiplier = 3.0f;
