@@ -9,6 +9,6 @@ PhysicMaterial:
   m_Name: Apple friction
   dynamicFriction: 1000
   staticFriction: 1000
-  bounciness: 1
+  bounciness: 0.8
   frictionCombine: 3
   bounceCombine: 0

@@ -511,7 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applePrefab: {fileID: 2086620294854551687, guid: 5ba1845bfa4024e4f939b5dc293bb3e2,
     type: 3}
-  throwForce: 1
+  throwForce: 3
 --- !u!1001 &646917207
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -49,8 +49,9 @@ public class AppleSpawner : MonoBehaviour
 			((float)rand.NextDouble() - 0.5f ) * throwForce
         );
 
-        float forceMultiplier = 3.0f;
-        newApple.GetComponent<Rigidbody>().AddForce( randForce * forceMultiplier, ForceMode.Impulse );
+        Rigidbody newAppleRb = newApple.GetComponent<Rigidbody>();
+        newAppleRb.AddForce( randForce, ForceMode.Impulse );
+        newAppleRb.AddTorque( randForce, ForceMode.Impulse );
 
         return newApple;
     }
