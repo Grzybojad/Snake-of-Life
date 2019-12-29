@@ -4,6 +4,7 @@ using TMPro;
 public class UIcontroller : MonoBehaviour
 {
     public GameObject gameOverScreen;
+    public GameObject pauseScreen;
     public TextMeshProUGUI finalScoreText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highscoreText;
@@ -11,7 +12,6 @@ public class UIcontroller : MonoBehaviour
     private GameController gameController;
     private int currentScore;
 
-    // Start is called before the first frame update
     void Awake()
     {
         // Get a reference to the Game Controller object
@@ -21,6 +21,23 @@ public class UIcontroller : MonoBehaviour
         FindObjectOfType<PlayerController>().deathEvent += OnPlayerDeath;
         FindObjectOfType<GameController>().newScoreEvent += OnScoreChange;
         FindObjectOfType<GameController>().newHighscoreEvent += OnHighscoreChange;
+    }
+
+    private void Update()
+    {
+        if( Input.GetKeyDown( KeyCode.Escape ) )
+        {
+            if( pauseScreen.activeInHierarchy )
+            {
+                Time.timeScale = 1;
+                pauseScreen.SetActive( false );
+            } 
+            else
+            {
+                Time.timeScale = 0;
+                pauseScreen.SetActive( true );
+            }
+        }
     }
 
     private void OnPlayerDeath()

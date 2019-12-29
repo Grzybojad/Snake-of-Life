@@ -39,6 +39,8 @@ public class GameController : MonoBehaviour
 		FindObjectOfType<AppleSpawner>().appleCollectEvent += OnAppleCollectEvent;
 
 		_gameState = GameState.playing;
+
+		Time.timeScale = 1;
 	}
 
 	private void Start()
