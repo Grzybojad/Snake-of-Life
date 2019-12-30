@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
 	private Rigidbody rb;
 
-	private float pathNodeSpacing = 0.1f;
+	private float pathNodeSpacing = 0.2f;
 
 	private AudioSource audioSource;
 	public AudioClip bite_sfx;
