@@ -1,15 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-	//public GameObject applePrefab;
-	//public GameObject levelBoundry;
-
-	//private Vector3 levelSize3D;
-	//private Vector2 levelSize2D;
-	//private float spawnPosLimit = 0.8f;
 	private GameObject apple;
 
 	public int score;
@@ -18,6 +13,9 @@ public class GameController : MonoBehaviour
 	public delegate void ScoreDelegate( int score );
 	public event ScoreDelegate newScoreEvent;
 	public event ScoreDelegate newHighscoreEvent;
+
+	public event Action pauseGameEvent;
+	public event Action unpauseGameEvent;
 
 	enum GameState
 	{
@@ -58,7 +56,7 @@ public class GameController : MonoBehaviour
 				PlayingUpdate();
 				break;
 			case GameState.paused:
-
+				PausedUpdate();
 				break;
 			case GameState.gameOver:
 				GameOverUpdate();
@@ -68,7 +66,22 @@ public class GameController : MonoBehaviour
 
 	void PlayingUpdate()
 	{
-		
+		if( Input.GetKeyDown( KeyCode.Escape ) )
+		{
+			_gameState = GameState.paused;
+			Time.timeScale = 0;
+			pauseGameEvent();
+		}
+	}
+
+	void PausedUpdate()
+	{
+		if( Input.GetKeyDown( KeyCode.Escape ) )
+		{
+			_gameState = GameState.playing;
+			Time.timeScale = 1;
+			unpauseGameEvent();
+		}
 	}
 
 	void GameOverUpdate()

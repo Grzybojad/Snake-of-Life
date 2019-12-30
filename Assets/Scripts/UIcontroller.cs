@@ -18,26 +18,21 @@ public class UIcontroller : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
 
         // Event listeners
+        FindObjectOfType<GameController>().pauseGameEvent += OnPauseGame;
+        FindObjectOfType<GameController>().unpauseGameEvent += OnUnpauseGame;
         FindObjectOfType<PlayerController>().deathEvent += OnPlayerDeath;
         FindObjectOfType<GameController>().newScoreEvent += OnScoreChange;
         FindObjectOfType<GameController>().newHighscoreEvent += OnHighscoreChange;
     }
 
-    private void Update()
+    void OnPauseGame()
     {
-        if( Input.GetKeyDown( KeyCode.Escape ) )
-        {
-            if( pauseScreen.activeInHierarchy )
-            {
-                Time.timeScale = 1;
-                pauseScreen.SetActive( false );
-            } 
-            else
-            {
-                Time.timeScale = 0;
-                pauseScreen.SetActive( true );
-            }
-        }
+        pauseScreen.SetActive( true );
+    }
+    
+    void OnUnpauseGame()
+    {
+        pauseScreen.SetActive( false );
     }
 
     private void OnPlayerDeath()
