@@ -14,6 +14,8 @@ public class OptionsMenu : MonoBehaviour
 	public AudioMixer masterMixer;
 
 	Resolution[] resolutions;
+	// Nr of resolutions that are skipped (because they are tiny)
+	int skippedResolutions;
 
 	private void Start()
 	{
@@ -34,10 +36,15 @@ public class OptionsMenu : MonoBehaviour
 		List<string> resolutionStrings = new List<string>();
 
 		int currentResolutionIndex = 0;
+		skippedResolutions = 0;
 		for( int i = 0; i < resolutions.Length; ++i )
 		{
 			// Don't display resolutions that are too small
-			if( resolutions[ i ].width < 600 || resolutions[ i ].height < 500 ) continue;
+			if( resolutions[ i ].width < 600 || resolutions[ i ].height < 500 )
+			{
+				skippedResolutions++;
+				continue;
+			}
 
 			string option = resolutions[ i ].width + " x " + resolutions[ i ].height;
 			resolutionStrings.Add( option );
@@ -73,7 +80,7 @@ public class OptionsMenu : MonoBehaviour
 
 	public void SetResolution( int resolutionIndex )
 	{
-		Resolution newRes = resolutions[ resolutionIndex ];
+		Resolution newRes = resolutions[ skippedResolutions + resolutionIndex ];
 		Screen.SetResolution( newRes.width, newRes.height, Screen.fullScreen );
 	}
 
