@@ -1,3 +1,5 @@
+# Snake of Life
+
 A work in progress spiritual successor to [vitaSnake](github.com/Grzybojad/vitaSnake).
 
 [Download here](https://github.com/Grzybojad/Snake-of-Life/releases)  
