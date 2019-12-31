@@ -66,7 +66,8 @@ public class GameController : MonoBehaviour
 
 	void PlayingUpdate()
 	{
-		if( Input.GetKeyDown( KeyCode.Escape ) )
+		// Pause game if player presses ESC on a keyboard or START on a controller
+		if( Input.GetKeyDown( KeyCode.Escape ) || Input.GetKeyDown( "joystick button 7" ) )
 		{
 			_gameState = GameState.paused;
 			Time.timeScale = 0;
@@ -76,7 +77,8 @@ public class GameController : MonoBehaviour
 
 	void PausedUpdate()
 	{
-		if( Input.GetKeyDown( KeyCode.Escape ) )
+		// Unpause game if player presses ESC on a keyboard or START on a controller
+		if( Input.GetKeyDown( KeyCode.Escape ) || Input.GetKeyDown( "joystick button 7" ) )
 		{
 			_gameState = GameState.playing;
 			Time.timeScale = 1;
@@ -86,14 +88,7 @@ public class GameController : MonoBehaviour
 
 	void GameOverUpdate()
 	{
-		// Temporary
-		if( Input.GetKeyDown( KeyCode.R ) )
-		{
-			Time.timeScale = 1;
-			PlayerPrefs.Save();
-
-			SceneManager.LoadScene( 0 );
-		}
+		
 	}
 
 	void OnAppleCollectEvent()
@@ -112,6 +107,7 @@ public class GameController : MonoBehaviour
 			newHighscoreEvent?.Invoke( highscore );
 			PlayerPrefs.SetInt( "Highscore", highscore );
 		}
+		PlayerPrefs.Save();
 
 		_gameState = GameState.gameOver;
 	}

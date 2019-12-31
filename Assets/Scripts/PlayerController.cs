@@ -103,21 +103,20 @@ public class PlayerController : MonoBehaviour
 
 	void Movement()
 	{
-		// TODO: replace with input manager
-		float horizontalInput = 0;
-		if( Input.GetKey( KeyCode.LeftArrow ) ) horizontalInput = -1;
-		if( Input.GetKey( KeyCode.RightArrow ) ) horizontalInput = 1;
-
+		// Rotate the player based on input
+		float horizontalInput = Input.GetAxisRaw( "Horizontal" );
 		Quaternion nextRot = Quaternion.Euler( transform.eulerAngles + transform.up * horizontalInput * turningSpeed * Time.fixedDeltaTime );
 		rb.MoveRotation( nextRot );
 
+		// Reset the velocity
 		rb.velocity = Vector3.zero;
 
 		// Speed boost
 		float speedMultiplier = 1.0f;
-		if( Input.GetKey( KeyCode.Space ) )
+		if( Input.GetButton( "Jump" ) )
 			speedMultiplier = 1.6f;
 
+		// Move player
 		rb.AddForce( transform.forward * speed * speedMultiplier * Time.fixedDeltaTime, ForceMode.Impulse );
 	}
 
@@ -147,6 +146,7 @@ public class PlayerController : MonoBehaviour
 
 	void AddPart()
 	{
+		// Instantiate the new part
 		TailPart newPart;
 		if( tail.Count == 0 )
 		{
@@ -158,9 +158,12 @@ public class PlayerController : MonoBehaviour
 			Quaternion newPartRot = tail[ tail.Count - 1 ].transform.rotation;
 			newPart = Instantiate( bodyPrefab, newPartPos, newPartRot );
 		}
+
+		// Add the new part if the instantiation was successfull
 		if( newPart != null ) tail.Add( newPart );
 		else Debug.Log( "Failed to instantiate a new part!" );
 
+		// Set the parent of the new part
 		if( tail.Count > 1 )
 			tail[ tail.Count - 1 ].parent = tail[ tail.Count - 2 ].transform;
 		else
