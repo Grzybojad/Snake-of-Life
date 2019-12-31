@@ -2,7 +2,7 @@ A work in progress spiritual successor to [vitaSnake](github.com/Grzybojad/vitaS
 
 [Download here](https://github.com/Grzybojad/Snake-of-Life/releases)  
 
-![Snake of Life gameplay screenshot(screenshots/gameplay.jpg)
+![Snake of Life gameplay screenshot](screenshots/gameplay.jpg)
 
 # Controls
 * Use A/D, left/right arrows or gamepad analog stick to control the snake
@@ -13,4 +13,3 @@ This project was build with Unity 2019.3.0f3
 
 Required packages:
 * TextMesh Pro
-
